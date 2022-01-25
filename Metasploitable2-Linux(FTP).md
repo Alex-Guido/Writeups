@@ -1,5 +1,5 @@
 # Metasploitable2-Linux(FTP)
-I will be attacking Metasploitble2-Linux focusing on FTP. My next writeups on Metasploitable will focus on other vulnearbabilities. 
+I will be attacking Metasploitble2-Linux focusing on FTP. My next writeups on Metasploitable will focus on other vulnerabilities.
 
 The first thing I did was log into this machine with the credentials provided from the download page. 
 
