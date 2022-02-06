@@ -4,7 +4,7 @@ This is a easy vulnerable machine I did from vulnhub. It was easy but it took me
 
 I started off with an arp-scan
 
-`arp-scan 10.10.10.0/24`
+`arp-scan x.x.x.x/24`
 
 ![111](https://user-images.githubusercontent.com/55252902/152678895-3280b6cd-5b94-4186-9e56-79725da20695.JPG)
 
