@@ -47,8 +47,7 @@ I started off with an arp-scan
 
 # Information Gathering and Disclosure
 
-![Untitled 1](https://user-images.githubusercontent.com/55252902/152678939-d44221c3-e8ab-433e-b433-657f41e0242c.png)
-
+![Untitled](https://user-images.githubusercontent.com/55252902/153281075-cdd188ad-3ea9-427d-a73e-ce15d848efb4.png)
 
 Apache Default Webpage Version - 2.4.51 httpd (Debian) (poor hygiene)
 
