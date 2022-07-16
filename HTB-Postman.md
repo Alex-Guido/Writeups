@@ -33,6 +33,7 @@ PORT      STATE SERVICE REASON         VERSION
 |_http-favicon: Unknown favicon MD5: 91549383E709F4F1DD6C8DAB07890301
 | http-methods: 
 |_  Supported Methods: GET HEAD POST OPTIONS
+```
 
 ## Information Gathering
 ### Port 80
