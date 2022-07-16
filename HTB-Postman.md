@@ -120,7 +120,8 @@ The user.txt file located in /home/matt, unable to cat the file out. Will need e
 
 There is too much to shift through to figure out a route for privilege escalation, so I am going to download [Linpeas](https://github.com/carlospolop/PEASS-ng/releases/tag/20220710) into this machine.
 
-![Uploading Pasted image 20220715160456.png…]()
+
+![Pasted image 20220715160456](https://user-images.githubusercontent.com/55252902/179374492-9c37aee5-2af8-4905-ba7a-12d0535263c2.png)
 
 
 ![Pasted image 20220715160538](https://user-images.githubusercontent.com/55252902/179373929-ed8be361-d66d-4409-a7d0-3816026e8d46.png)
